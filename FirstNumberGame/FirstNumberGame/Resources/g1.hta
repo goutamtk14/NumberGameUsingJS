@@ -22,9 +22,9 @@ body {
 
 .application-header {
     color: black;
-	padding: 8px 16px;
+	padding: 6px 12px;
     font-size: 17px;
-    line-height: 30px;
+    line-height: 20px;
 	font-family: "Arial";
 	font-weight: bold;
 }
@@ -36,7 +36,7 @@ button[disabled]{
     padding: 7px 16px;
     text-transform: uppercase;
     font-size: 16px;
-    border: 2px solid #000;
+    border: 2px solid #808080;
     cursor: pointer;
     font-family: "Arial";
 	font-weight: bold;
@@ -159,6 +159,11 @@ getAdjacent();
 document.getElementById("moves").innerHTML="MOVES: "+moves;
 
 if(count===9){
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+document.getElementById(i+""+j).disabled=true;
+}
+}
 document.getElementById("complete").style.display="block";
 }
 }
@@ -232,7 +237,7 @@ document.getElementById(loc[0]+""+loc[1]).className="default-btn primary";
 
 <div class="application-header">
 <h4 id="moves">MOVES:</h4>
-<h4 id="complete" style="display:none;">WELL DONE! GAME COMPLETE!:</h4>
+<h4 id="complete" style="display:none;">WELL DONE! GAME COMPLETE!</h4>
 </div>
 </div>
 
