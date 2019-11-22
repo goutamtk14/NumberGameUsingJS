@@ -1,0 +1,241 @@
+<html>
+<head>
+<title>First Number</title>
+<meta http-equiv="x-ua-compatible" content="IE=9"/>
+<HTA:Application
+ApplicationName="First Number GaME"
+Id="fg"
+ContextMenu="no"
+SingleInstance="no"
+InnerBorder="no"
+Border="dialog"
+Scroll="no"
+Selection="no"
+MaximizeButton="no"
+/>
+
+
+<style>
+body {
+  background-image: url('bg.jpg');
+}
+
+.application-header {
+    color: black;
+	padding: 8px 16px;
+    font-size: 17px;
+    line-height: 30px;
+	font-family: "Arial";
+	font-weight: bold;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #F5F5F5;
+    margin: 4px;
+    padding: 7px 16px;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 2px solid #000;
+    cursor: pointer;
+    font-family: "Arial";
+	font-weight: bold;
+    color: black;	
+}
+
+.default-btn {
+    background-color: #fff;
+    margin: 4px;
+    padding: 7px 16px;
+    text-transform: uppercase;
+    font-size: 16px;
+    border: 2px solid #000;
+    cursor: pointer;
+    font-family: "Arial";
+	font-weight: bold;
+}
+.primary {
+    background-color: #F7FBFF;
+    border-color: #0079EF;
+	color: black;
+    
+}
+.action-buttions {
+    margin-bottom: 8px;
+    clear: both;
+    height: 44px;
+}
+.application-title h2 {
+    color: black;
+	padding: 8px 16px;
+    font-size: 27px;
+    line-height: 30px;
+    font-family: "Arial";
+	font-weight: bold;
+}
+</style>
+
+<script type="text/javascript">
+
+var newarr=[[],[],[]];
+var origarray=[[],[],[]];
+var loc=[];
+var dir=[];
+var count;
+var temp;
+var moves;
+window.resizeTo(300,410);
+window.onload=function(){
+moves=0;
+var arr=[1,2,3,4,5,6,7,8,"*"];
+
+var k=0;
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+origarray[i][j]=arr[k];
+k++;
+}	
+}
+
+arr=shuffleArray(arr);
+
+k=0;
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+newarr[i][j]=arr[k];
+k++;
+}	
+}
+
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+document.getElementById(i+""+j).innerHTML=newarr[i][j];	
+}
+}
+getAdjacent();
+}
+
+function getLocation(){
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+if(newarr[i][j]==="*"){
+loc=[i,j];
+}
+}
+}
+return loc;
+}
+
+function shuffleArray(array) {
+ for (var i = array.length - 1; i > 0; i--) {
+var j = Math.floor(Math.random() * (i + 1));
+var temp = array[i];
+array[i] = array[j];
+array[j] = temp;
+}
+return array;
+}
+
+
+function swap(a,b){
+moves++;
+loc=getLocation();
+temp=newarr[a][b];
+document.getElementById(a+""+b).innerHTML=newarr[loc[0]][loc[1]];
+newarr[a][b]=newarr[loc[0]][loc[1]];
+document.getElementById(loc[0]+""+loc[1]).innerHTML=temp;
+newarr[loc[0]][loc[1]]=temp;
+
+count=0;
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+if(newarr[i][j]===origarray[i][j]){
+count++;
+}
+}
+}
+
+getAdjacent();
+document.getElementById("moves").innerHTML="MOVES: "+moves;
+
+if(count===9){
+document.getElementById("complete").style.display="block";
+}
+}
+
+function getAdjacent(){
+loc=getLocation();
+up= loc[0]-1;
+down=loc[0]+1;
+left= loc[1]-1;
+right=loc[1]+1;
+
+dir=[up, down, left, right];
+
+for(i=0; i<dir.length; i++){
+if(dir[i]<0 || dir[i]>2){
+dir[i]=null;
+}
+}
+
+for(i=0; i<3; i++){
+for(j=0; j<3; j++){
+document.getElementById(i+""+j).disabled=true;
+}
+}
+
+	
+if(dir[0]!=null){
+document.getElementById(up+""+loc[1]).disabled=false;
+document.getElementById(up+""+loc[1]).className="default-btn";
+}
+
+if(dir[1]!=null){
+document.getElementById(down+""+loc[1]).disabled=false;	
+document.getElementById(down+""+loc[1]).className="default-btn";
+}
+
+if(dir[2]!=null){
+document.getElementById(loc[0]+""+left).disabled=false;	
+document.getElementById(loc[0]+""+left).className="default-btn";
+}
+
+if(dir[3]!=null){
+document.getElementById(loc[0]+""+right).disabled=false;
+document.getElementById(loc[0]+""+right).className="default-btn";	
+}
+
+document.getElementById(loc[0]+""+loc[1]).disabled=false;
+document.getElementById(loc[0]+""+loc[1]).className="default-btn primary";
+
+
+	
+}
+
+</script>
+
+</head>
+<body>
+<div class="application-title" style="text-align:center;">
+<h2>FIRST NUMBER GAME</h2>
+</div> 
+<div style="text-align:center;">
+<button class="default-btn" id="00" onclick="swap(0,0)">1</button>
+<button class="default-btn"id="01" onclick="swap(0,1)">2</button>
+<button class="default-btn"id="02" onclick="swap(0,2)">3</button><br>
+<button class="default-btn"id="10" onclick="swap(1,0)">4</button>
+<button class="default-btn"id="11" onclick="swap(1,1)">5</button>
+<button class="default-btn"id="12" onclick="swap(1,2)">6</button><br>
+<button class="default-btn"id="20" onclick="swap(2,0)">7</button>
+<button class="default-btn"id="21" onclick="swap(2,1)">8</button>
+<button class="default-btn"id="22" onclick="swap(2,2)">*</button>
+
+<div class="application-header">
+<h4 id="moves">MOVES:</h4>
+<h4 id="complete" style="display:none;">WELL DONE! GAME COMPLETE!:</h4>
+</div>
+</div>
+
+
+</body>
+</html>
